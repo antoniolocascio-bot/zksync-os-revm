@@ -23,8 +23,6 @@ pub mod v3;
 use v1::deployer::CONTRACT_DEPLOYER_ADDRESS;
 use v1::l1_messenger::L1_MESSENGER_ADDRESS;
 use v1::l2_base_token::L2_BASE_TOKEN_ADDRESS;
-use v2::known_codes::KNOWN_CODES_STORAGE_ADDRESS;
-use v2::nonce_holder::NONCE_HOLDER_ADDRESS;
 
 use v3::l1_messenger::L1_MESSENGER_HOOK_ADDRESS;
 use v3::mint_base_token::MINT_BASE_TOKEN_HOOK_ADDRESS;
@@ -64,12 +62,6 @@ fn maybe_call_custom_precompile<CTX: ContextTr>(
             }
             L2_BASE_TOKEN_ADDRESS => {
                 v2::l2_base_token::l2_base_token_precompile_call as CustomPrecompile<_>
-            }
-            NONCE_HOLDER_ADDRESS => {
-                v2::nonce_holder::nonce_holder_precompile_call as CustomPrecompile<_>
-            }
-            KNOWN_CODES_STORAGE_ADDRESS => {
-                v2::known_codes::known_codes_precompile_call as CustomPrecompile<_>
             }
             _ => return None,
         },
