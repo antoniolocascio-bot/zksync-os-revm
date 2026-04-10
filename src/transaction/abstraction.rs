@@ -36,6 +36,10 @@ pub trait ZkTxTr: Transaction {
     fn is_service_tx(&self) -> bool {
         self.tx_type() == SERVICE_TRANSACTION_TYPE
     }
+
+    /// L1 transaction hash for L1→L2 deposits and upgrade txs.
+    /// Used by the handler to emit the bootloader result L2→L1 log.
+    fn l1_tx_hash(&self) -> Option<B256>;
 }
 
 /// ZKsync OS transaction.
@@ -213,6 +217,10 @@ impl<T: Transaction> ZkTxTr for ZKsyncTx<T> {
     fn is_service_tx(&self) -> bool {
         self.service_tx || self.tx_type() == SERVICE_TRANSACTION_TYPE
     }
+
+    fn l1_tx_hash(&self) -> Option<B256> {
+        self.l1_to_l2_part.l1_tx_hash
+    }
 }
 
 /// Builder for constructing [`ZKsyncTx`] instances
@@ -278,6 +286,12 @@ impl ZKsyncTxBuilder {
     /// Set the settlement-layer chain id of the L1 -> L2 part of the transaction.
     pub fn settlement_layer_chain_id(mut self, settlement_layer_chain_id: Option<U256>) -> Self {
         self.l1_to_l2_part.settlement_layer_chain_id = settlement_layer_chain_id;
+        self
+    }
+
+    /// Set the L1 transaction hash for the bootloader result log.
+    pub fn l1_tx_hash(mut self, l1_tx_hash: Option<B256>) -> Self {
+        self.l1_to_l2_part.l1_tx_hash = l1_tx_hash;
         self
     }
 

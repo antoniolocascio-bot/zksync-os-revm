@@ -1,5 +1,5 @@
 //! Contains Deposit transaction parts.
-use revm::primitives::{Address, U256};
+use revm::primitives::{Address, B256, U256};
 
 /// Upgrade transaction type.
 pub const UPGRADE_TRANSACTION_TYPE: u8 = 0x7E;
@@ -13,6 +13,8 @@ pub struct L1ToL2TransactionParts {
     pub mint: Option<U256>,
     pub refund_recipient: Option<Address>,
     pub settlement_layer_chain_id: Option<U256>,
+    /// L1 transaction hash — used to emit the bootloader result L2→L1 log.
+    pub l1_tx_hash: Option<B256>,
 }
 
 impl L1ToL2TransactionParts {
@@ -25,6 +27,7 @@ impl L1ToL2TransactionParts {
             mint,
             refund_recipient,
             settlement_layer_chain_id,
+            l1_tx_hash: None,
         }
     }
 }
