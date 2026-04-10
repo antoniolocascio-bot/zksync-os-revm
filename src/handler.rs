@@ -433,9 +433,10 @@ where
             }
         }
 
-        // Emit the bootloader result L2→L1 log for L1 transactions.
+        // Emit the bootloader result L2→L1 log for L1→L2 transactions.
         // In zksync-os this is done by the bootloader after each L1→L2 tx.
-        if let Some(tx_hash) = evm.ctx().tx().l1_tx_hash() {
+        if evm.ctx().tx().is_l1_to_l2_tx() {
+            let tx_hash = evm.ctx().tx().tx_hash();
             evm.ctx().chain_mut().emit_l1_tx_result(tx_hash, is_success);
         }
         if let Some(gas_used_override) = evm.ctx().tx().gas_used_override() {
