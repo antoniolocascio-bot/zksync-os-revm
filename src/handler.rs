@@ -5,6 +5,7 @@ use std::boxed::Box;
 use crate::{
     api::exec::ZkContextTr,
     constants::{BASE_TOKEN_HOLDER_ADDRESS, L2_ASSET_TRACKER_ADDRESS, L2_BASE_TOKEN_ADDRESS},
+    l2_to_l1_logs::L2ToL1LogStore,
     spec::ZkSpecId,
     transaction::{ZKsyncTxError, ZkTxTr},
 };
@@ -430,6 +431,12 @@ where
             } else {
                 evm.ctx().journal_mut().checkpoint_revert(checkpoint);
             }
+        }
+
+        // Emit the bootloader result L2→L1 log for L1 transactions.
+        // In zksync-os this is done by the bootloader after each L1→L2 tx.
+        if let Some(tx_hash) = evm.ctx().tx().l1_tx_hash() {
+            evm.ctx().chain_mut().emit_l1_tx_result(tx_hash, is_success);
         }
         if let Some(gas_used_override) = evm.ctx().tx().gas_used_override() {
             let gas_limit = evm.ctx().tx().gas_limit();
