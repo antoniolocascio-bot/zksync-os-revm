@@ -49,7 +49,7 @@ where
     }
 
     // Charge base cost for calling system hook
-    if !gas.record_cost(HOOK_BASE_GAS_COST) {
+    if !gas.record_regular_cost(HOOK_BASE_GAS_COST) {
         return oog_error();
     }
 
@@ -107,7 +107,7 @@ where
 
             // Charge extra gas for `set_bytecode_details`
             let extra_gas = set_bytecode_details_extra_gas(bytecode_length as u64);
-            if !gas.record_cost(extra_gas) {
+            if !gas.record_regular_cost(extra_gas) {
                 return oog_error();
             }
 
@@ -130,7 +130,7 @@ where
                 WARM_STORAGE_READ_COST
             };
             // Charge base cost for warm/cold read
-            if !gas.record_cost(gas_for_access) {
+            if !gas.record_regular_cost(gas_for_access) {
                 return oog_error();
             }
 

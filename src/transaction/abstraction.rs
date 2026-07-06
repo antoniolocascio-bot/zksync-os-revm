@@ -370,6 +370,7 @@ mod tests {
         let zk_tx = ZKsyncTx::builder()
             .base(base_tx)
             .mint(U256::ZERO)
+            .tx_hash(B256::ZERO)
             .build()
             .unwrap();
         // Verify transaction type (deposit transactions should have tx_type based on ZkSpecId)
@@ -384,7 +385,7 @@ mod tests {
 
     #[test]
     fn test_service_tx_default_is_false() {
-        let tx_from_build = ZKsyncTx::builder().build().unwrap();
+        let tx_from_build = ZKsyncTx::builder().tx_hash(B256::ZERO).build().unwrap();
         let tx_from_build_fill = ZKsyncTx::builder().build_fill();
 
         assert!(!tx_from_build.service_tx);
@@ -393,7 +394,11 @@ mod tests {
 
     #[test]
     fn test_service_tx_builder_persists_to_build_and_build_fill() {
-        let tx_from_build = ZKsyncTx::builder().service_tx(true).build().unwrap();
+        let tx_from_build = ZKsyncTx::builder()
+            .service_tx(true)
+            .tx_hash(B256::ZERO)
+            .build()
+            .unwrap();
         let tx_from_build_fill = ZKsyncTx::builder().service_tx(true).build_fill();
 
         assert!(tx_from_build.service_tx);
