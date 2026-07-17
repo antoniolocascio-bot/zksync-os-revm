@@ -326,7 +326,10 @@ impl ZKsyncTxBuilder {
     /// Build the [`ZKsyncTx`] instance, return error if the transaction is not valid.
     ///
     pub fn build(self) -> Result<ZKsyncTx<TxEnv>, ZkBuilderror> {
-        assert!(self.tx_hash_set, "tx_hash is required — call .tx_hash(hash) before .build()");
+        assert!(
+            self.tx_hash_set,
+            "tx_hash is required — call .tx_hash(hash) before .build()"
+        );
         let base = self.base.build()?;
 
         Ok(ZKsyncTx {

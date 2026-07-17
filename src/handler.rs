@@ -511,7 +511,8 @@ where
         // (basic_bootloader .../zk/process_l1_transaction.rs). Older versions
         // emitted it for both.
         let emit_result_log = if ZkSpecId::AtlasV3.is_enabled_in(evm.ctx().cfg().spec()) {
-            evm.ctx().tx().tx_type() == crate::transaction::priority_tx::L1_PRIORITY_TRANSACTION_TYPE
+            evm.ctx().tx().tx_type()
+                == crate::transaction::priority_tx::L1_PRIORITY_TRANSACTION_TYPE
         } else {
             evm.ctx().tx().is_l1_to_l2_tx()
         };

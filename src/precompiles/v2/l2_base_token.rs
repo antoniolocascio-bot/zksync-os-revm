@@ -36,7 +36,9 @@ const WITHDRAWAL_WITH_MESSAGE_TOPIC: [u8; 32] = [
 ];
 
 /// Run the L2 base token precompile.
-pub fn l2_base_token_precompile_call<CTX: ContextTr<Chain: crate::l2_to_l1_logs::L2ToL1LogStore>>(
+pub fn l2_base_token_precompile_call<
+    CTX: ContextTr<Chain: crate::l2_to_l1_logs::L2ToL1LogStore>,
+>(
     ctx: &mut CTX,
     inputs: &CallInputs,
     is_delegate: bool,
@@ -75,7 +77,11 @@ pub fn l2_base_token_precompile_call<CTX: ContextTr<Chain: crate::l2_to_l1_logs:
 
 /// Handles withdraw(address) calls - burns tokens and sends L1 message
 /// Emits Withdrawal event on success
-fn withdraw<CTX: ContextTr<Chain: crate::l2_to_l1_logs::L2ToL1LogStore>>(ctx: &mut CTX, inputs: &CallInputs, mut gas: Gas) -> InterpreterResult {
+fn withdraw<CTX: ContextTr<Chain: crate::l2_to_l1_logs::L2ToL1LogStore>>(
+    ctx: &mut CTX,
+    inputs: &CallInputs,
+    mut gas: Gas,
+) -> InterpreterResult {
     let revert = |g: Gas| InterpreterResult::new(InstructionResult::Revert, [].into(), g);
 
     let view = CalldataView::new(ctx, &inputs.input);

@@ -103,11 +103,8 @@ where
     ctx.journal_mut().log(log);
 
     // Record structured L2→L1 log via the chain context.
-    ctx.chain_mut().push_l2_to_l1_log(
-        L1_MESSENGER_ADDRESS,
-        b160_to_b256(caller),
-        message_hash,
-    );
+    ctx.chain_mut()
+        .push_l2_to_l1_log(L1_MESSENGER_ADDRESS, b160_to_b256(caller), message_hash);
 
     InterpreterResult::new(InstructionResult::Return, message_hash.into(), *gas)
 }

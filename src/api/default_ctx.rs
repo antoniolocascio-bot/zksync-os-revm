@@ -1,6 +1,6 @@
 //! Contains trait [`DefaultZk`] used to create a default context.
-use crate::{ZKsyncTx, ZkSpecId};
 use crate::l2_to_l1_logs::ZkChainContext;
+use crate::{ZKsyncTx, ZkSpecId};
 use revm::{
     Context, Journal, MainContext,
     context::{BlockEnv, CfgEnv, TxEnv},
@@ -11,7 +11,8 @@ use revm::{
 ///
 /// The `ZkChainContext` (CHAIN parameter) stores L2→L1 logs produced by the
 /// L1Messenger precompile. Access via `ctx.chain_mut()`.
-pub type ZkContext<DB> = Context<BlockEnv, ZKsyncTx<TxEnv>, CfgEnv<ZkSpecId>, DB, Journal<DB>, ZkChainContext>;
+pub type ZkContext<DB> =
+    Context<BlockEnv, ZKsyncTx<TxEnv>, CfgEnv<ZkSpecId>, DB, Journal<DB>, ZkChainContext>;
 
 /// Trait that allows for a default context to be created.
 pub trait DefaultZk {

@@ -66,7 +66,13 @@ pub fn deployer_precompile_call<CTX: ContextTr>(
             // finished reading calldata, release borrow before mutating context
             drop(view);
 
-            set_bytecode_on_address_internal(ctx, address, observable_bytecode_hash, bytecode_length, gas)
+            set_bytecode_on_address_internal(
+                ctx,
+                address,
+                observable_bytecode_hash,
+                bytecode_length,
+                gas,
+            )
         }
         _ => revert(gas),
     }

@@ -31,8 +31,6 @@ use v3::set_bytecode_on_address::SET_BYTECODE_ON_ADDRESS_HOOK_ADDRESS;
 type CustomPrecompile<CTX> =
     fn(ctx: &mut CTX, inputs: &CallInputs, is_delegate: bool) -> InterpreterResult;
 
-use crate::l2_to_l1_logs::L2ToL1LogStore;
-
 /// Returns `Some(InterpreterResult)` if a precompile is defined for the given [ZkSpecId] and address.
 /// Returns `None` if no precompile is defined.
 fn maybe_call_custom_precompile<CTX>(

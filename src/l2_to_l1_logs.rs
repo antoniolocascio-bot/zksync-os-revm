@@ -65,8 +65,7 @@ impl ZkChainContext {
     /// - key: transaction hash
     /// - value: 1 if success, 0 if failure
     pub fn emit_l1_tx_result(&mut self, tx_hash: B256, success: bool) {
-        const BOOTLOADER_ADDRESS: Address =
-            address!("0000000000000000000000000000000000008001");
+        const BOOTLOADER_ADDRESS: Address = address!("0000000000000000000000000000000000008001");
         let value = B256::from(U256::from(success as u8));
         self.logs.push(L2ToL1Log {
             l2_shard_id: 0,

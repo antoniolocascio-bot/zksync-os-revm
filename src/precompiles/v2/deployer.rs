@@ -1,4 +1,3 @@
-use crate::l2_to_l1_logs::L2ToL1LogStore;
 use crate::precompiles::utils::{oog_error, revert};
 use crate::precompiles::v2::gas_cost::HOOK_BASE_GAS_COST;
 use crate::precompiles::{
@@ -82,7 +81,7 @@ where
             }
             let address = Address::from_slice(&calldata[12..32]);
 
-            let bytecode_hash =
+            let _bytecode_hash =
                 B256::from_slice(calldata[32..64].try_into().expect("Always valid"));
 
             let bytecode_length: u32 = match U256::from_be_slice(&calldata[64..96]).try_into() {
